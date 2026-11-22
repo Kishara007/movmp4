@@ -1,0 +1,98 @@
+---
+import '../styles/global.css';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  titleKey: string;
+  descKey: string;
+  canonicalUrl: string;
+  currentPath: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  titleKey,
+  descKey,
+  canonicalUrl,
+  currentPath,
+  jsonLd,
+} = Astro.props;
+
+const schemas = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
+const ogImage = 'https://movmp4.pages.dev/og-image.png';
+---
+
+<!doctype html>
+<html lang="en" data-i18n-title={titleKey} data-i18n-desc={descKey}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#EEE3CB" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="MOV to MP4 Converter" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Prevent flash of dark/light theme before first paint (defaults to Light) -->
+    <script is:inline>
+      (function () {
+        try {
+          var savedTheme = localStorage.getItem('movmp4_theme');
+          if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script is:inline async src="https://www.googletagmanager.com/gtm.js?id=GTM-WRZJJ3NS"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-97ED64EJJJ"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-97ED64EJJJ');
+    </script>
+
+    {schemas.map((schema) => (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <Navbar currentPath={currentPath} client:load />
+    <main id="main-content" class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,36 @@
+{
+  "name": "movmp4",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Free, 100% browser-based MOV to MP4 converter built with Astro, TypeScript, Tailwind CSS, and client-side FFmpeg WASM.",
+  "scripts": {
+    "predev": "node scripts/prepare-ffmpeg.mjs",
+    "dev": "astro dev",
+    "start": "astro dev",
+    "prebuild": "node scripts/prepare-ffmpeg.mjs",
+    "build": "astro build",
+    "preview": "astro preview",
+    "typecheck": "astro check && tsc --noEmit",
+    "deploy": "astro build && wrangler pages deploy dist --project-name=movmp4 --branch=main"
+  },
+  "dependencies": {
+    "@astrojs/react": "^7.1.9",
+    "@ffmpeg/core": "^0.12.10",
+    "@ffmpeg/ffmpeg": "^0.12.15",
+    "@ffmpeg/util": "^0.12.2",
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.4.13",
+    "lucide-react": "^1.77.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "tailwindcss": "^4.3.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.166.0"
+  }
+}

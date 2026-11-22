@@ -1,0 +1,353 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MovToMp4Tool from '../components/MovToMp4Tool';
+import en from '../i18n/locales/en.json';
+
+const canonicalUrl = 'https://movmp4.pages.dev/';
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'MOV to MP4 Converter',
+  url: canonicalUrl,
+  applicationCategory: 'MultimediaApplication',
+  operatingSystem: 'Any (Web Browser)',
+  browserRequirements: 'Requires WebAssembly support',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  author: {
+    '@type': 'Person',
+    name: 'Kishara Dilshan',
+    email: 'kisharadilshan007@gmail.com',
+  },
+  featureList: [
+    '100% client-side MOV to MP4 conversion',
+    'Smart lossless container remuxing (-c copy)',
+    'Automatic H.264/AAC compatibility transcoding',
+    'Batch conversion queue',
+    'Start and end MM:SS video trimming',
+    'One-click mute audio (-an)',
+    'Resolution scaling (Original, 1080p, 720p, 480p)',
+  ],
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: en.home.faq1Q,
+      acceptedAnswer: { '@type': 'Answer', text: en.home.faq1A },
+    },
+    {
+      '@type': 'Question',
+      name: en.home.faq2Q,
+      acceptedAnswer: { '@type': 'Answer', text: en.home.faq2A },
+    },
+    {
+      '@type': 'Question',
+      name: en.home.faq3Q,
+      acceptedAnswer: { '@type': 'Answer', text: en.home.faq3A },
+    },
+    {
+      '@type': 'Question',
+      name: en.home.faq4Q,
+      acceptedAnswer: { '@type': 'Answer', text: en.home.faq4A },
+    },
+    {
+      '@type': 'Question',
+      name: en.home.faq5Q,
+      acceptedAnswer: { '@type': 'Answer', text: en.home.faq5A },
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title={en.meta.homeTitle}
+  description={en.meta.homeDescription}
+  titleKey="meta.homeTitle"
+  descKey="meta.homeDescription"
+  canonicalUrl={canonicalUrl}
+  currentPath="/"
+  jsonLd={[softwareSchema, faqSchema]}
+>
+  <!-- Hero Focal Viewport: ONLY the main MOV to MP4 Converter inside a large clean focal box -->
+  <section
+    aria-labelledby="hero-heading"
+    class="mx-auto flex min-h-[calc(100vh-4.25rem)] max-w-5xl flex-col justify-center px-4 py-6 sm:px-6 sm:py-10"
+  >
+    <div class="mx-auto max-w-3xl text-center mb-6 sm:mb-8">
+      <h1
+        id="hero-heading"
+        class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight"
+        data-i18n="home.h1"
+      >
+        {en.home.h1}
+      </h1>
+      <p
+        class="mt-3 sm:mt-4 text-base sm:text-lg leading-relaxed"
+        style="color: var(--text-muted);"
+        data-i18n="home.heroSubtitle"
+      >
+        {en.home.heroSubtitle}
+      </p>
+    </div>
+
+    <MovToMp4Tool client:load />
+  </section>
+
+  <!-- Below-the-Fold Helpful Content Sections -->
+  <div class="mx-auto max-w-5xl space-y-14 px-4 pt-8 pb-6 sm:px-6 sm:space-y-16">
+    <!-- Section 1: 3 Steps -->
+    <section aria-labelledby="steps-heading" class="space-y-6">
+      <div class="max-w-3xl">
+        <h2
+          id="steps-heading"
+          class="text-2xl sm:text-3xl font-bold tracking-tight"
+          data-i18n="home.stepsHeading"
+        >
+          {en.home.stepsHeading}
+        </h2>
+        <p class="mt-2 text-base leading-relaxed" style="color: var(--text-muted);" data-i18n="home.stepsIntro">
+          {en.home.stepsIntro}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <article
+          class="rounded-2xl border p-6"
+          style="background-color: var(--bg-card); border-color: var(--border-main);"
+        >
+          <h3 class="text-lg font-bold" data-i18n="home.step1Title">{en.home.step1Title}</h3>
+          <p class="mt-2 text-sm sm:text-base leading-relaxed" style="color: var(--text-muted);" data-i18n="home.step1Body">
+            {en.home.step1Body}
+          </p>
+        </article>
+        <article
+          class="rounded-2xl border p-6"
+          style="background-color: var(--bg-card); border-color: var(--border-main);"
+        >
+          <h3 class="text-lg font-bold" data-i18n="home.step2Title">{en.home.step2Title}</h3>
+          <p class="mt-2 text-sm sm:text-base leading-relaxed" style="color: var(--text-muted);" data-i18n="home.step2Body">
+            {en.home.step2Body}
+          </p>
+        </article>
+        <article
+          class="rounded-2xl border p-6"
+          style="background-color: var(--bg-card); border-color: var(--border-main);"
+        >
+          <h3 class="text-lg font-bold" data-i18n="home.step3Title">{en.home.step3Title}</h3>
+          <p class="mt-2 text-sm sm:text-base leading-relaxed" style="color: var(--text-muted);" data-i18n="home.step3Body">
+            {en.home.step3Body}
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Section 2: Instant Browser Conversion -->
+    <section aria-labelledby="engine-heading" class="space-y-6">
+      <div class="max-w-3xl">
+        <h2
+          id="engine-heading"
+          class="text-2xl sm:text-3xl font-bold tracking-tight"
+          data-i18n="home.engineHeading"
+        >
+          {en.home.engineHeading}
+        </h2>
+        <p class="mt-2 text-base leading-relaxed" style="color: var(--text-muted);" data-i18n="home.engineLead">
+          {en.home.engineLead}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <article
+          class="rounded-2xl border p-6"
+          style="background-color: var(--bg-card); border-color: var(--border-main);"
+        >
+          <h3 class="text-lg font-bold" data-i18n="home.engineCard1Title">{en.home.engineCard1Title}</h3>
+          <p class="mt-2 text-sm sm:text-base leading-relaxed" style="color: var(--text-muted);" data-i18n="home.engineCard1Body">
+            {en.home.engineCard1Body}
+          </p>
+        </article>
+        <article
+          class="rounded-2xl border p-6"
+          style="background-color: var(--bg-card); border-color: var(--border-main);"
+        >
+          <h3 class="text-lg font-bold" data-i18n="home.engineCard2Title">{en.home.engineCard2Title}</h3>
+          <p class="mt-2 text-sm sm:text-base leading-relaxed" style="color: var(--text-muted);" data-i18n="home.engineCard2Body">
+            {en.home.engineCard2Body}
+          </p>
+        </article>
+        <article
+          class="rounded-2xl border p-6"
+          style="background-color: var(--bg-card); border-color: var(--border-main);"
+        >
+          <h3 class="text-lg font-bold" data-i18n="home.engineCard3Title">{en.home.engineCard3Title}</h3>
+          <p class="mt-2 text-sm sm:text-base leading-relaxed" style="color: var(--text-muted);" data-i18n="home.engineCard3Body">
+            {en.home.engineCard3Body}
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Section 3: Batch Convert, Trim & Mute Audio -->
+    <section aria-labelledby="controls-heading" class="space-y-6">
+      <div class="max-w-3xl">
+        <h2
+          id="controls-heading"
+          class="text-2xl sm:text-3xl font-bold tracking-tight"
+          data-i18n="home.controlsHeading"
+        >
+          {en.home.controlsHeading}
+        </h2>
+        <p class="mt-2 text-base leading-relaxed" style="color: var(--text-muted);" data-i18n="home.controlsLead">
+          {en.home.controlsLead}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <article
+          class="rounded-2xl border p-6"
+          style="background-color: var(--bg-card); border-color: var(--border-main);"
+        >
+          <h3 class="text-lg font-bold" data-i18n="home.control1Title">{en.home.control1Title}</h3>
+          <p class="mt-2 text-sm sm:text-base leading-relaxed" style="color: var(--text-muted);" data-i18n="home.control1Body">
+            {en.home.control1Body}
+          </p>
+        </article>
+        <article
+          class="rounded-2xl border p-6"
+          style="background-color: var(--bg-card); border-color: var(--border-main);"
+        >
+          <h3 class="text-lg font-bold" data-i18n="home.control2Title">{en.home.control2Title}</h3>
+          <p class="mt-2 text-sm sm:text-base leading-relaxed" style="color: var(--text-muted);" data-i18n="home.control2Body">
+            {en.home.control2Body}
+          </p>
+        </article>
+        <article
+          class="rounded-2xl border p-6"
+          style="background-color: var(--bg-card); border-color: var(--border-main);"
+        >
+          <h3 class="text-lg font-bold" data-i18n="home.control3Title">{en.home.control3Title}</h3>
+          <p class="mt-2 text-sm sm:text-base leading-relaxed" style="color: var(--text-muted);" data-i18n="home.control3Body">
+            {en.home.control3Body}
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Section 4: Universal Playback Across Windows, Android & Web -->
+    <section aria-labelledby="playback-heading" class="space-y-6">
+      <div class="max-w-3xl">
+        <h2
+          id="playback-heading"
+          class="text-2xl sm:text-3xl font-bold tracking-tight"
+          data-i18n="home.playbackHeading"
+        >
+          {en.home.playbackHeading}
+        </h2>
+        <p class="mt-2 text-base leading-relaxed" style="color: var(--text-muted);" data-i18n="home.playbackLead">
+          {en.home.playbackLead}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <article
+          class="rounded-2xl border p-6"
+          style="background-color: var(--bg-card); border-color: var(--border-main);"
+        >
+          <h3 class="text-lg font-bold" data-i18n="home.playback1Title">{en.home.playback1Title}</h3>
+          <p class="mt-2 text-sm sm:text-base leading-relaxed" style="color: var(--text-muted);" data-i18n="home.playback1Body">
+            {en.home.playback1Body}
+          </p>
+        </article>
+        <article
+          class="rounded-2xl border p-6"
+          style="background-color: var(--bg-card); border-color: var(--border-main);"
+        >
+          <h3 class="text-lg font-bold" data-i18n="home.playback2Title">{en.home.playback2Title}</h3>
+          <p class="mt-2 text-sm sm:text-base leading-relaxed" style="color: var(--text-muted);" data-i18n="home.playback2Body">
+            {en.home.playback2Body}
+          </p>
+        </article>
+        <article
+          class="rounded-2xl border p-6"
+          style="background-color: var(--bg-card); border-color: var(--border-main);"
+        >
+          <h3 class="text-lg font-bold" data-i18n="home.playback3Title">{en.home.playback3Title}</h3>
+          <p class="mt-2 text-sm sm:text-base leading-relaxed" style="color: var(--text-muted);" data-i18n="home.playback3Body">
+            {en.home.playback3Body}
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Section 5: FAQ -->
+    <section aria-labelledby="faq-heading" class="space-y-6">
+      <h2
+        id="faq-heading"
+        class="text-2xl sm:text-3xl font-bold tracking-tight"
+        data-i18n="home.faqHeading"
+      >
+        {en.home.faqHeading}
+      </h2>
+
+      <div class="space-y-4">
+        <article
+          class="rounded-2xl border p-5 sm:p-6"
+          style="background-color: var(--bg-card); border-color: var(--border-main);"
+        >
+          <h3 class="text-base sm:text-lg font-bold" data-i18n="home.faq1Q">{en.home.faq1Q}</h3>
+          <p class="mt-2 text-sm sm:text-base leading-relaxed" style="color: var(--text-muted);" data-i18n="home.faq1A">
+            {en.home.faq1A}
+          </p>
+        </article>
+
+        <article
+          class="rounded-2xl border p-5 sm:p-6"
+          style="background-color: var(--bg-card); border-color: var(--border-main);"
+        >
+          <h3 class="text-base sm:text-lg font-bold" data-i18n="home.faq2Q">{en.home.faq2Q}</h3>
+          <p class="mt-2 text-sm sm:text-base leading-relaxed" style="color: var(--text-muted);" data-i18n="home.faq2A">
+            {en.home.faq2A}
+          </p>
+        </article>
+
+        <article
+          class="rounded-2xl border p-5 sm:p-6"
+          style="background-color: var(--bg-card); border-color: var(--border-main);"
+        >
+          <h3 class="text-base sm:text-lg font-bold" data-i18n="home.faq3Q">{en.home.faq3Q}</h3>
+          <p class="mt-2 text-sm sm:text-base leading-relaxed" style="color: var(--text-muted);" data-i18n="home.faq3A">
+            {en.home.faq3A}
+          </p>
+        </article>
+
+        <article
+          class="rounded-2xl border p-5 sm:p-6"
+          style="background-color: var(--bg-card); border-color: var(--border-main);"
+        >
+          <h3 class="text-base sm:text-lg font-bold" data-i18n="home.faq4Q">{en.home.faq4Q}</h3>
+          <p class="mt-2 text-sm sm:text-base leading-relaxed" style="color: var(--text-muted);" data-i18n="home.faq4A">
+            {en.home.faq4A}
+          </p>
+        </article>
+
+        <article
+          class="rounded-2xl border p-5 sm:p-6"
+          style="background-color: var(--bg-card); border-color: var(--border-main);"
+        >
+          <h3 class="text-base sm:text-lg font-bold" data-i18n="home.faq5Q">{en.home.faq5Q}</h3>
+          <p class="mt-2 text-sm sm:text-base leading-relaxed" style="color: var(--text-muted);" data-i18n="home.faq5A">
+            {en.home.faq5A}
+          </p>
+        </article>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
