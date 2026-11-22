@@ -80,7 +80,6 @@
     "selectFiles": "Sélectionner des Fichiers MOV",
     "addMoreFiles": "Ajouter d'Autres MOV",
     "privacyBadge": "100% Navigateur • Zéro Envoi • Sans Limite 1 Go",
-    "remuxHint": "Remuxage instantané sans perte (-c copy) si la vidéo reste originale",
     "filesCount": "{count} vidéo(s) en file",
     "convertAll": "Tout Convertir en MP4",
     "convertingAll": "Conversion en cours...",

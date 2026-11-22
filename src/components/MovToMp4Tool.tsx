@@ -40,7 +40,6 @@ interface QueuedVideo {
   lastConvertedOptions: ConversionOptions | null;
   optionsOpen: boolean;
   stage: ConversionStage;
-  progress: number;
   errorMessage: string | null;
   result: ConversionResult | null;
 }
@@ -79,7 +78,6 @@ function createQueueItem(file: File): QueuedVideo {
     lastConvertedOptions: null,
     optionsOpen: false,
     stage: 'loading',
-    progress: 0,
     errorMessage: null,
     result: null,
   };
@@ -234,7 +232,6 @@ export default function MovToMp4Tool() {
       updateItem(id, (item) => ({
         ...item,
         stage: 'loading',
-        progress: 0,
         errorMessage: null,
         result: null,
       }));
@@ -243,9 +240,6 @@ export default function MovToMp4Tool() {
         const result = await convertMovToMp4(file, optionsSnapshot, {
           onStageChange: (stage) => {
             updateItem(id, (item) => ({ ...item, stage }));
-          },
-          onProgress: (percent) => {
-            updateItem(id, (item) => ({ ...item, progress: percent }));
           },
         });
 
@@ -259,7 +253,6 @@ export default function MovToMp4Tool() {
         updateItem(id, (item) => ({
           ...item,
           stage: 'done',
-          progress: 100,
           lastConvertedOptions: { ...optionsSnapshot },
           result,
         }));
@@ -277,7 +270,6 @@ export default function MovToMp4Tool() {
         updateItem(id, (item) => ({
           ...item,
           stage: 'error',
-          progress: 0,
           errorMessage: message,
         }));
       } finally {
@@ -692,22 +684,11 @@ export default function MovToMp4Tool() {
               <ShieldCheck className="h-4 w-4 text-[#967E76] dark:text-[#B7C4CF]" aria-hidden="true" />
               <span>{dict.converter.privacyBadge}</span>
             </span>
-            <span
-              className="inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5"
-              style={{
-                backgroundColor: 'var(--bg-card)',
-                borderColor: 'var(--border-main)',
-                color: 'var(--text-muted)',
-              }}
-            >
-              <Zap className="h-4 w-4 text-[#967E76] dark:text-[#B7C4CF]" aria-hidden="true" />
-              <span>{dict.converter.remuxHint}</span>
-            </span>
           </div>
         </div>
       ) : singleItem && singleItemBusy ? (
         /* SCREEN 1.5: INSTANT AUTO-CONVERSION ANIMATION (Single File) */
-        <div className="px-6 py-12 sm:px-10 sm:py-16 text-center space-y-6">
+        <div className="px-6 py-12 sm:px-10 sm:py-16 text-center space-y-5">
           <div className="flex items-center justify-center">
             <MovToMp4Visual active float={false} />
           </div>
@@ -721,39 +702,9 @@ export default function MovToMp4Tool() {
             </p>
           </div>
 
-          <div className="mx-auto max-w-md space-y-2">
-            <div className="flex items-center justify-between text-xs sm:text-sm font-semibold">
-              <span style={{ color: 'var(--text-muted)' }}>
-                {singleItem.stage === 'loading'
-                  ? dict.converter.statusLoadingEngine
-                  : singleItem.stage === 'remuxing'
-                    ? dict.converter.statusRemuxing
-                    : dict.converter.statusTranscoding}
-              </span>
-              <span>{singleItem.progress}%</span>
-            </div>
-            <div
-              className="relative h-3 w-full overflow-hidden rounded-full"
-              style={{ backgroundColor: 'var(--bg-subtle)' }}
-            >
-              <div
-                className="relative h-full rounded-full transition-all duration-300"
-                style={{
-                  width: `${
-                    singleItem.stage === 'loading'
-                      ? Math.max(18, singleItem.progress)
-                      : Math.max(12, singleItem.progress)
-                  }%`,
-                  backgroundColor: 'var(--action-primary)',
-                }}
-              >
-                <div className="animate-progress-sheen absolute inset-y-0 w-1/3 bg-white/35" />
-              </div>
-            </div>
-            <p className="pt-2 text-xs sm:text-sm" style={{ color: 'var(--text-muted)' }}>
-              {dict.converter.makingMp4Hint}
-            </p>
-          </div>
+          <p className="text-xs sm:text-sm" style={{ color: 'var(--text-muted)' }}>
+            {dict.converter.makingMp4Hint}
+          </p>
         </div>
       ) : singleItem ? (
         /* SCREEN 2: MP4 READY + CLEAR MORE SETTINGS (Single File) */
@@ -1072,10 +1023,7 @@ export default function MovToMp4Tool() {
                 item.stage === 'transcoding';
 
               let statusLabel = dict.converter.makingMp4;
-              if (item.stage === 'loading') statusLabel = dict.converter.statusLoadingEngine;
-              else if (item.stage === 'remuxing') statusLabel = dict.converter.statusRemuxing;
-              else if (item.stage === 'transcoding') statusLabel = dict.converter.statusTranscoding;
-              else if (item.stage === 'done') {
+              if (item.stage === 'done') {
                 statusLabel =
                   item.result?.mode === 'remux'
                     ? dict.converter.statusDoneRemux
@@ -1225,38 +1173,6 @@ export default function MovToMp4Tool() {
                       </button>
                     </div>
                   </div>
-
-                  {(isBusy || item.stage === 'done') && (
-                    <div className="mt-3.5">
-                      <div className="flex items-center justify-between text-xs font-semibold mb-1.5">
-                        <span style={{ color: 'var(--text-muted)' }}>{statusLabel}</span>
-                        <span>{item.stage === 'done' ? '100%' : `${item.progress}%`}</span>
-                      </div>
-                      <div
-                        className="relative h-2.5 w-full overflow-hidden rounded-full"
-                        style={{ backgroundColor: 'var(--bg-card)' }}
-                      >
-                        <div
-                          className="relative h-full rounded-full transition-all duration-300"
-                          style={{
-                            width: `${
-                              item.stage === 'done'
-                                ? 100
-                                : item.stage === 'loading'
-                                  ? Math.max(15, item.progress)
-                                  : Math.max(8, item.progress)
-                            }%`,
-                            backgroundColor:
-                              item.stage === 'done' ? '#2E7D5B' : 'var(--action-primary)',
-                          }}
-                        >
-                          {isBusy && (
-                            <div className="animate-progress-sheen absolute inset-y-0 w-1/3 bg-white/35" />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  )}
 
                   {item.optionsOpen && (
                     <div className="mt-4 pt-4 border-t" style={{ borderColor: 'var(--border-main)' }}>

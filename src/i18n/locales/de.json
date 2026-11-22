@@ -80,7 +80,6 @@
     "selectFiles": "MOV-Dateien auswählen",
     "addMoreFiles": "Weitere MOVs hinzufügen",
     "privacyBadge": "100% Browserbasiert • Kein Upload • Kein 1-GB-Limit",
-    "remuxHint": "Sofortiges verlustfreies Remux (-c copy) bei Originalvideo",
     "filesCount": "{count} Video(s) in Warteschlange",
     "convertAll": "Alle in MP4 umwandeln",
     "convertingAll": "Warteschlange wird verarbeitet...",

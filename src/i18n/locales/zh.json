@@ -80,7 +80,6 @@
     "selectFiles": "选择 MOV 文件",
     "addMoreFiles": "继续添加 MOV",
     "privacyBadge": "100% 浏览器本地运行 • 零上传 • 无 1 GB 限制",
-    "remuxHint": "保持原视频时采用秒级无损封装 (-c copy)",
     "filesCount": "队列中有 {count} 个视频",
     "convertAll": "全部转换为 MP4",
     "convertingAll": "正在转换队列...",

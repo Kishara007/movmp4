@@ -80,7 +80,6 @@
     "selectFiles": "MOVファイルを選択",
     "addMoreFiles": "MOVをさらに追加",
     "privacyBadge": "100%ブラウザ処理 • 送信ゼロ • 1GB制限なし",
-    "remuxHint": "オリジナル設定時は無劣化リマックス(-c copy)で高速変換",
     "filesCount": "キュー内の動画: {count}件",
     "convertAll": "すべてMP4に変換",
     "convertingAll": "キューを変換中...",
